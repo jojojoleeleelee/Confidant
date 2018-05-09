@@ -34,3 +34,4 @@ https://www.biblegateway.com/quicksearch/?quicksearch=hope&qs_version=NIV
 https://www.biblestudytools.com/
 - Main Emotions - Large Category:
 Anger, shame, fear, confident, confused, happy, hurt, love, sad, thankful, worried
+- or no no. to be more broad: Anger, Fear, Sad, Happy, Thankful

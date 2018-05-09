@@ -6,4 +6,4 @@ This is a platform that will guide the user through their current emotions and e
 
 Last but not least, Confidant will serve as a trustworthy confidant by giving the user customized feedback with words of true wisdom - quoting verses from the Bible.
 
-- Joanne Lee
+- Build by **Joanne Lee**
