@@ -26,3 +26,5 @@ describe ApplicationController do
       post '/signup', params
       expect(last_response.location).to include("/emotions")
     end
+  end
+end

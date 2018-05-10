@@ -1,5 +1,6 @@
 class EmotionsController < ApplicationController
   get "/emotions" do
+    # binding.pry
     if logged_in?
       @emotions = Emotion.all
       erb :"/emotions/emotions"
