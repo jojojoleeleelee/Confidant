@@ -1,8 +1,6 @@
 class EmotionsController < ApplicationController
   get "/emotions" do
-    # binding.pry
     if logged_in?
-      @emotions = Emotion.all
       erb :"/emotions/emotions"
     else
       redirect "/login"
@@ -18,17 +16,29 @@ class EmotionsController < ApplicationController
   end
 
   post '/emotions' do
-    if !params[:content].empty?
+    if !params[:name].empty?
       @emotion = Emotion.create(params)
-      @emotion.user = current_user
-      @emotion.user = User.find_by_id(session[:user_id])
-      @emotion.save
+      @emotion.user_id = session[:user_id]
+      binding.pry
+      @verse_array = scrape_verses(params[:name])
       redirect "/emotions/#{@emotion.id}"
     else
       redirect '/emotions/new'
     end
   end
 
+  get '/emotions/verse' do
+
+  end
+
+  post '/emotions/verse'
+  get '/emotions/dashboard' do
+    if logged_in?
+      erb :"/emotions/dashboard"
+    else
+      redirect "/login"
+    end
+  end
 
   get "/emotions/:id" do
     if logged_in?
@@ -38,7 +48,6 @@ class EmotionsController < ApplicationController
       redirect "/login"
     end
   end
-
 
   get "/emotions/:id/edit" do
     if logged_in?

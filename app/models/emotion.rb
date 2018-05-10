@@ -1,6 +1,5 @@
 class Emotion < ActiveRecord::Base
-  has_many :users
-  has_many :verses
+  belongs_to :user
   include BibleScraper::InstanceMethods
 
 end
