@@ -30,11 +30,11 @@ describe ApplicationController do
 
   describe 'BibleScraper' do
 
-    describe "#scrape_profile_page" do
+    describe "#scrape_verse_page" do
       it "can scrape verses based on emotion" do
         @emotion = "Sorrow"
         answer = 'My soul is overwhelmed with sorrow to the point of death,” he said to them. “Stay here and keep watch.'
-        scraped_verse = BibleScraper.scrape_verses(@emotion)
+        scraped_verse = scrape_verses(@emotion)
         expect(scraped_verse).to be_a(Array)
         expect(scraped_verse.last).to match(answer)
       end

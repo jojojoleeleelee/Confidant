@@ -1,5 +1,7 @@
 class EmotionsController < ApplicationController
+
   get "/emotions" do
+    @user = current_user
     if logged_in?
       erb :"/emotions/emotions"
     else
@@ -16,40 +18,40 @@ class EmotionsController < ApplicationController
   end
 
   post '/emotions' do
-    if !params[:name].empty?
-      @emotion = Emotion.create(params)
+    if !params[:name].empty? && !scrape_verses(params[:name]).empty?
+      @emotion = Emotion.find_or_create_by(name: params[:name].downcase)
+      @emotion.content = params[:content]
       @emotion.user_id = session[:user_id]
-      binding.pry
-      @verse_array = scrape_verses(params[:name])
-      redirect "/emotions/#{@emotion.id}"
+      @emotion.verse = scrape_verses(params[:name]).join(" *** ")
+      @emotion.save
+      redirect "/emotions/#{@emotion.slug}"
     else
+      # add flash message that says 'Sorry! For some reason, Confidant can't process that emotion!'
       redirect '/emotions/new'
     end
   end
 
-  get '/emotions/verse' do
-
+  post '/emotion/search' do
+    
   end
 
-  post '/emotions/verse'
-  get '/emotions/dashboard' do
+  get '/emotions/:slug' do
     if logged_in?
-      erb :"/emotions/dashboard"
+      @emotion = Emotion.find_by_slug(params[:slug])
+      erb :"/emotions/choose_verses"
     else
       redirect "/login"
     end
   end
 
-  get "/emotions/:id" do
-    if logged_in?
-      @emotion = Emotion.find_by_id(params[:id])
-      erb :"/emotions/show_emotions"
-    else
-      redirect "/login"
-    end
+  post '/emotions/:slug' do
+    @emotion = Emotion.find_by_slug(params[:slug])
+    @emotion.verse = params[:verse].join(" *** ")
+    @emotion.save
+    erb :"/emotions/show_emotion"
   end
 
-  get "/emotions/:id/edit" do
+  get "/emotions/:slug/edit" do
     if logged_in?
       @emotion = Emotion.find_by(params[:id])
       erb :"/emotions/edit_emotions"
@@ -58,7 +60,7 @@ class EmotionsController < ApplicationController
     end
   end
 
-  patch '/emotions/:id' do
+  patch '/emotions/:slug' do
     @user = current_user
     @emotion = Emotion.find_by(params[:id])
     if logged_in? && users_emotion? && !params[:content].empty?
@@ -69,13 +71,13 @@ class EmotionsController < ApplicationController
     end
   end
 
-  delete '/emotions/:id/delete' do
+  delete '/emotions/:slug/delete' do
     @emotion = Emotion.find_by(params[:id])
     @emotion.delete
     redirect '/emotions'
   end
 
-  get '/emotions/:id' do
+  get '/emotions/:slug' do
     @emotion = Emotion.find_by_id(params[:id])
     @user = User.find_by_id(session[:user_id])
     erb :"/emotions/show_emotions"

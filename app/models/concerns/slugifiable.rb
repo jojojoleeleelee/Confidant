@@ -1,22 +1,19 @@
 module Slugifiable
-  module InstanceMethods
-    def slug
-      username = self.username.strip.downcase
-      username.gsub! /['`]/,""
-      username.gsub! /\s*@\s*/, " at "
-      username.gsub! /\s*&\s*/, " and "
-      username.gsub! /\s*[^A-Za-z0-9\.\-]\s*/, '-'
-      username.gsub! /_+/,"-"
-      username.gsub! /\A[_\.]+|[_\.]+\z/,""
-      username
-    end
+  def slug
+    binding.pry
+    name = self.name.strip.downcase
+    name.gsub! /['`]/,""
+    name.gsub! /\s*@\s*/, " at "
+    name.gsub! /\s*&\s*/, " and "
+    name.gsub! /\s*[^A-Za-z0-9\.\-]\s*/, '-'
+    name.gsub! /_+/,"-"
+    name.gsub! /\A[_\.]+|[_\.]+\z/,""
+    name
   end
 
-  module ClassMethods
-    def find_by_slug(arg)
-      self.all.detect do |x|
-        x.slug == arg
-      end
+  def find_by_slug(arg)
+    self.all.detect do |x|
+      x.slug == arg
     end
   end
 end

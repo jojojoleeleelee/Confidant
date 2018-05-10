@@ -11,7 +11,6 @@ gem 'shotgun'
 gem 'pry'
 gem 'bcrypt'
 gem "tux"
-gem 'bootstrap'
 gem 'rack-rewrite'
 
 group :test do

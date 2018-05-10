@@ -3,7 +3,6 @@ require 'open-uri'
 require 'nokogiri'
 
 class ApplicationController < Sinatra::Base
-  @verses = []
 
   configure do
     set :public_folder, 'public'

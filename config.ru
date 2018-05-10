@@ -6,6 +6,7 @@ if ActiveRecord::Migrator.needs_migration?
 end
 
 run Rack::File.new("public")
+use Rack::Static, :root => 'public', :urls => ['/images', '/stylesheets']
 use Rack::MethodOverride
 run ApplicationController
 use EmotionsController
