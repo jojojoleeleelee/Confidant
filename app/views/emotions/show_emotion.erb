@@ -13,6 +13,18 @@
      <p></p>
      <br>
     <% end %></ul>
+
+    <br>
+    <h2 style="font-size:2em;">Search Emotions</h2>
+    <!-- search query by emotion??  -->
+    <form class="search_by_emotion" action="/emotion/search" method="post">
+    <input type="text" name="slug" value="">
+      <br>
+      <br>
+    <input type="submit" value="Search Emotion">
+    <br>
+    <br>
+    </form>
       <br>
     <a href="/emotions/<%= @emotion.slug %>/edit">Edit</a>
     &nbsp; | &nbsp;

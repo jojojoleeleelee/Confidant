@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   get '/logout' do
     if logged_in?
       session.clear
-      redirect "/login"
+      redirect "/"
     else
       redirect "/"
     end
@@ -41,7 +41,8 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect "/emotions"
     else
-      redirect "/"
+      # also needs flash message - no user found!
+      redirect "/login"
     end
   end
 

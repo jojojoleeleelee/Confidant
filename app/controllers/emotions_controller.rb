@@ -32,7 +32,12 @@ class EmotionsController < ApplicationController
   end
 
   post '/emotion/search' do
-
+    @emotion = Emotion.find_by_slug(params[:slug])
+    if !@emotion.nil?
+      redirect "/emotions/#{@emotion.slug}"
+    else
+      erb :"/emotions/invalid_search"
+    end
   end
 
   get '/emotions/:emotion_slug' do
