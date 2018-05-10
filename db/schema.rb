@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20180509183838) do
   create_table "emotions", force: :cascade do |t|
     t.string "name"
     t.string "content"
+    t.string "verse"
     t.string "user_id"
   end
 

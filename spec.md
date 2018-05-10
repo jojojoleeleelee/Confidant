@@ -17,7 +17,7 @@ Confirm
 - [x] You have a large number of small Git commits
 - [x] Your commit messages are meaningful
 - [x] You made the changes in a commit that relate to the commit message
-- [x] You don't include changes in a commit that aren't related to the commit message
+- [] You don't include changes in a commit that aren't related to the commit message
 
 Personal
 - Use http://www.sandersweb.net/bible/verse.php to scrape random bible verses.
@@ -28,7 +28,8 @@ Personal
 - Emotions class = a specific list of emotion verbs
 - Interesting research paper on Emotion and Decision Making
 https://scholar.harvard.edu/files/jenniferlerner/files/annual_review_manuscript_june_16_final.final_.pdf
-- The Feeling Vocabs https://www.ryerson.ca/~jgingras/pdf/Feeling%20Vocabulary.pdf
+- The Feeling Vocabs
+ https://www.ryerson.ca/~jgingras/pdf/Feeling%20Vocabulary.pdf
 - Maybe I should scrape bible verses based on the user's emotion:
 https://www.biblegateway.com/quicksearch/?quicksearch=hope&qs_version=NIV
 https://www.biblestudytools.com/

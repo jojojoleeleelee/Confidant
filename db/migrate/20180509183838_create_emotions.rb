@@ -3,6 +3,7 @@ class CreateEmotions < ActiveRecord::Migration
     create_table :emotions do |t|
       t.string :name
       t.string :content
+      t.string :verse
       t.string :user_id
     end
   end
