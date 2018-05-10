@@ -1,6 +1,11 @@
 <body>
   <div id="contact">
 <br>
+ <% if flash.has?(:message) %>
+<%= flash[:message] %>
+ <% end %>
+
+
   <% # below needs to be an @emotion url verse possibly add other quotes? Or info about verse? %>
     <h1> I feel <%= @emotion.name.upcase %></h1>
     <h2 style="font-size: 2.4em; font-style:italic;"><sup>Why?</sup>  <%= @emotion.content %></h2>

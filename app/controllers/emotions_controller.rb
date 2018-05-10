@@ -24,9 +24,10 @@ class EmotionsController < ApplicationController
       @emotion.user_id = session[:user_id]
       @emotion.verse = scrape_verses(params[:name]).join(" *** ")
       @emotion.save
+      flash[:message] = "Thanks for sharing."
       redirect "/emotions/#{@emotion.slug}"
     else
-      # add flash message that says 'Sorry! For some reason, Confidant can't process that emotion!'
+      flash[:message] = "Sorry, I don't understand!"
       redirect '/emotions/new'
     end
   end
@@ -43,6 +44,7 @@ class EmotionsController < ApplicationController
   get '/emotions/:emotion_slug' do
     if logged_in?
       @emotion = Emotion.find_by_slug(params[:emotion_slug])
+      flash[:message] = "I know, right?!"
       erb :"/emotions/choose_verses"
     else
       redirect "/login"
@@ -53,6 +55,7 @@ class EmotionsController < ApplicationController
     @emotion = Emotion.find_by_slug(params[:emotion_slug])
     @emotion.verse = params[:verse].join(" *** ")
     @emotion.save
+    flash[:message] = "Yup, I understand!"
     erb :"/emotions/show_emotion"
   end
 
@@ -72,6 +75,7 @@ class EmotionsController < ApplicationController
       @emotion.update(name: params[:name])
       @emotion.update(content: params[:content])
       @emotion.update(verse: params[:verse].join(" *** "))
+      flash[:message] = "We got that fixed!"
       erb :"/emotions/show_emotion"
     else
       # message - you must make the edits you promised to make! Rack flash
@@ -79,9 +83,14 @@ class EmotionsController < ApplicationController
     end
   end
 
-  delete '/emotions/:emotion_slug/delete' do
-    @emotion = Emotion.find_by(params[:emotion_slug])
-    @emotion.delete
-    redirect '/emotions'
+  get "/emotions/:emotion_slug/delete" do
+    @emotion = Emotion.find_by_slug(params[:emotion_slug])
+    if logged_in? && !@emotion.nil?
+      @emotion.delete
+      flash[:message] = "It's gone forever!"
+      redirect "/emotions"
+    else
+      erb :"/emotions/invalid_search"
+    end
   end
 end
