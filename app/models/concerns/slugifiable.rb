@@ -1,6 +1,5 @@
 module Slugifiable
   def slug
-    binding.pry
     name = self.name.strip.downcase
     name.gsub! /['`]/,""
     name.gsub! /\s*@\s*/, " at "

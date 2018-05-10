@@ -32,54 +32,51 @@ class EmotionsController < ApplicationController
   end
 
   post '/emotion/search' do
-    
+
   end
 
-  get '/emotions/:slug' do
+  get '/emotions/:emotion_slug' do
     if logged_in?
-      @emotion = Emotion.find_by_slug(params[:slug])
+      @emotion = Emotion.find_by_slug(params[:emotion_slug])
       erb :"/emotions/choose_verses"
     else
       redirect "/login"
     end
   end
 
-  post '/emotions/:slug' do
-    @emotion = Emotion.find_by_slug(params[:slug])
+  post '/emotions/:emotion_slug' do
+    @emotion = Emotion.find_by_slug(params[:emotion_slug])
     @emotion.verse = params[:verse].join(" *** ")
     @emotion.save
     erb :"/emotions/show_emotion"
   end
 
-  get "/emotions/:slug/edit" do
+  get "/emotions/:emotion_slug/edit" do
     if logged_in?
-      @emotion = Emotion.find_by(params[:id])
-      erb :"/emotions/edit_emotions"
+      @emotion = Emotion.find_by_slug(params[:emotion_slug])
+      erb :"/emotions/edit_emotion"
     else
       redirect "/login"
     end
   end
 
-  patch '/emotions/:slug' do
+  patch '/emotions/:emotion_slug' do
     @user = current_user
-    @emotion = Emotion.find_by(params[:id])
-    if logged_in? && users_emotion? && !params[:content].empty?
+    @emotion = Emotion.find_by_slug(params[:emotion_slug])
+    if logged_in? && users_emotion? && !params[:name].empty? && !params[:content].empty? && !params[:verse].empty?
+      @emotion.update(name: params[:name])
       @emotion.update(content: params[:content])
-      redirect "/emotions/#{@emotion.id}"
+      @emotion.update(verse: params[:verse].join(" *** "))
+      erb :"/emotions/show_emotion"
     else
+      # message - you must make the edits you promised to make! Rack flash
       redirect "/emotions/#{@emotion.id}/edit"
     end
   end
 
-  delete '/emotions/:slug/delete' do
-    @emotion = Emotion.find_by(params[:id])
+  delete '/emotions/:emotion_slug/delete' do
+    @emotion = Emotion.find_by(params[:emotion_slug])
     @emotion.delete
     redirect '/emotions'
-  end
-
-  get '/emotions/:slug' do
-    @emotion = Emotion.find_by_id(params[:id])
-    @user = User.find_by_id(session[:user_id])
-    erb :"/emotions/show_emotions"
   end
 end

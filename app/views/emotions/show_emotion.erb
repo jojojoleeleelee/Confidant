@@ -1,10 +1,10 @@
 <body>
   <div id="contact">
 <br>
-  <% # below needs to be an @emotion url verse %>
-    <h1> While you felt <%= @emotion.name.upcase %></h1>
-    <h2 style="font-size: 2.4em; font-style:italic;"><%= @emotion.content %></h2>
-    <h1>CONFIDANT gave you these verses </h1>
+  <% # below needs to be an @emotion url verse possibly add other quotes? Or info about verse? %>
+    <h1> I feel <%= @emotion.name.upcase %></h1>
+    <h2 style="font-size: 2.4em; font-style:italic;"><sup>Why?</sup>  <%= @emotion.content %></h2>
+    <h1><em><sub>CONFIDANT</sub></em> gave you these verses </h1>
 
     <br>
     <ul style="text-align:left;"><% @emotion.verse.split("***").each do |verse| %>
@@ -18,10 +18,12 @@
     &nbsp; | &nbsp;
     <a href="/emotions/new">Create New</a>
     &nbsp; | &nbsp;
+    <a href="/emotions">Home</a>
+    &nbsp; | &nbsp;
     <a href="/emotions/<%= @emotion.slug %>/delete">Delete</a>
     <br>
     <br>
-    <footer style="font-size:1.7em;">CONFIDANT: BUILT WITH LOVE</footer>
+    <footer style="font-size:1.7em;">CONFIDANT: Built with <strong>LOVE</strong></footer>
     <br>
     <p></p>
   </div>
