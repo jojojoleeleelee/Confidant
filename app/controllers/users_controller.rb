@@ -11,6 +11,7 @@ class UsersController < ApplicationController
     if !params[:name].empty? && !params[:email].empty? && !params[:password].empty?
       @user = User.create(params)
       session[:user_id] = @user.id
+      flash[:message] = "You're golden!"
       redirect "/emotions"
     else
       redirect "/signup"

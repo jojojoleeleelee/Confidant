@@ -1,3 +1,8 @@
+
+<% if flash.has?(:message) %>
+<h2><%= flash[:message] %></h2>
+<% end %>
+
 <h1>Welcome, <em><%= current_user.name.upcase %></em> </h1>
 <br>
 <h2>Here are all your previous emotions:</h2>

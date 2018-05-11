@@ -184,6 +184,9 @@ footer img:focus , footer a:focus { outline: none; }
 </style>
 </head>
 <hgroup>
+  <% if flash.has?(:message) %>
+ <h1><%= flash[:message] %></h1>
+  <% end %>
   <h1>Sign Up</h1>
 </hgroup>
 <form action="/signup" method="post">

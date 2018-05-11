@@ -7,6 +7,10 @@
      <strong><%= @emotion.name.upcase %></strong> , </h1>
 
     <h1 style="font-size: 3.4em; font-style:italic;"><%= @emotion.content %> </h1>
+    <% if flash.has?(:message) %>
+<em><h1><%= flash[:message] %></h1></em>
+<br>
+    <% end %>
     <h2>Choose the bible verse you'd like to keep.</h2>
     <br>
     <form action="/emotions/<%=@emotion.slug%>" method="post">

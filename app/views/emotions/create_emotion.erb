@@ -5,6 +5,9 @@
     <title>New Emotion</title>
   </head>
   <body>
+    <% if flash.has?(:message) %>
+   <h1><%= flash[:message] %></h1>
+    <% end %>
     <h1>What do you feel?</h1>
     <form action="/emotions" method="post"></h2>
       <h2><input type="text" name="name"></h2>

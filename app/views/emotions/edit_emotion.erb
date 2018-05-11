@@ -1,6 +1,8 @@
 <form action="/emotions/<%= @emotion.slug %>" method="post">
    <input id="hidden" type="hidden" name="_method" value="patch">
-
+   <% if flash.has?(:message) %>
+  <h1><%= flash[:message] %></h1>
+   <% end %>
 <h1>Edit <strong><%= @emotion.name.upcase%></strong> to -</h1>
 <br>
 <input type="text" name="name" id="content">

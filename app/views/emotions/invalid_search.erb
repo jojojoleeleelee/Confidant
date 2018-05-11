@@ -5,8 +5,12 @@
     <title>Invalid search</title>
   </head>
   <body>
+
 <h1 style="font-size:12em;">Oopsy Daisy</h1>
-<h2>We can't find what you're looking for!</h2>
+<% if flash.has?(:message) %>
+<h1><%= flash[:message] %></h1>
+<% end %>
+<h2>Like most things in the world, I am not omnipotent.</h2>
 <br>
 
 <h2><a href="/emotions/new">Tell me something <em>NEW</em></a>

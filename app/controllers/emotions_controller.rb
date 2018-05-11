@@ -24,10 +24,10 @@ class EmotionsController < ApplicationController
       @emotion.user_id = session[:user_id]
       @emotion.verse = scrape_verses(params[:name]).join(" *** ")
       @emotion.save
-      flash[:message] = "Thanks for sharing."
+      flash[:message] = "I feel ya mate."
       redirect "/emotions/#{@emotion.slug}"
     else
-      flash[:message] = "Sorry, I don't understand!"
+      flash[:message] = "Sorry, can you write something... I can understand!"
       redirect '/emotions/new'
     end
   end
@@ -44,7 +44,7 @@ class EmotionsController < ApplicationController
   get '/emotions/:emotion_slug' do
     if logged_in?
       @emotion = Emotion.find_by_slug(params[:emotion_slug])
-      flash[:message] = "I know, right?!"
+      flash[:message] = "Confidant wants to give you these verses"
       erb :"/emotions/choose_verses"
     else
       redirect "/login"
@@ -55,31 +55,30 @@ class EmotionsController < ApplicationController
     @emotion = Emotion.find_by_slug(params[:emotion_slug])
     @emotion.verse = params[:verse].join(" *** ")
     @emotion.save
-    flash[:message] = "Yup, I understand!"
     erb :"/emotions/show_emotion"
   end
 
   get "/emotions/:emotion_slug/edit" do
-    if logged_in?
-      @emotion = Emotion.find_by_slug(params[:emotion_slug])
+    @emotion = Emotion.find_by_slug(params[:emotion_slug])
+    if logged_in? && !@emotion.nil?
       erb :"/emotions/edit_emotion"
     else
-      redirect "/login"
+      redirect "/emotions"
     end
   end
 
   patch '/emotions/:emotion_slug' do
-    @user = current_user
-    @emotion = Emotion.find_by_slug(params[:emotion_slug])
-    if logged_in? && users_emotion? && !params[:name].empty? && !params[:content].empty? && !params[:verse].empty?
+    if logged_in? && users_emotion? && !params[:name].nil? && !params[:content].empty? && !params[:verse].empty?
+      @user = current_user
+      @emotion = Emotion.find_by_slug(params[:emotion_slug])
       @emotion.update(name: params[:name])
       @emotion.update(content: params[:content])
       @emotion.update(verse: params[:verse].join(" *** "))
       flash[:message] = "We got that fixed!"
       erb :"/emotions/show_emotion"
     else
-      # message - you must make the edits you promised to make! Rack flash
-      redirect "/emotions/#{@emotion.id}/edit"
+      flash[:message] = "You gotta make the edits!"
+      erb :"/emotions/invalid_search"
     end
   end
 
@@ -87,7 +86,7 @@ class EmotionsController < ApplicationController
     @emotion = Emotion.find_by_slug(params[:emotion_slug])
     if logged_in? && !@emotion.nil?
       @emotion.delete
-      flash[:message] = "It's gone forever!"
+      flash[:message] = "Delete complete. It's gone forever!"
       redirect "/emotions"
     else
       erb :"/emotions/invalid_search"
