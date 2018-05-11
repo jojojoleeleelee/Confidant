@@ -27,7 +27,7 @@ class EmotionsController < ApplicationController
       flash[:message] = "I feel ya mate."
       redirect "/emotions/#{@emotion.slug}"
     else
-      flash[:message] = "Sorry, can you write something... I can understand!"
+      flash[:message] = "Sorry, I can't understand!"
       redirect '/emotions/new'
     end
   end
