@@ -19,7 +19,7 @@ class EmotionsController < ApplicationController
 
   post '/emotions' do
     if !params[:name].empty? && !scrape_verses(params[:name]).empty?
-      @emotion = Emotion.find_or_create_by(name: params[:name].downcase)
+      @emotion = Emotion.create(name: params[:name].downcase)
       @emotion.content = params[:content]
       @emotion.user_id = session[:user_id]
       @emotion.verse = scrape_verses(params[:name]).join(" *** ")
